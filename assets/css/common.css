@@ -1,0 +1,257 @@
+/* =========================================================
+   common.css — 全站公共样式（导航 / 页脚 / 基础组件）
+   ========================================================= */
+
+:root {
+  --font-serif: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "SimSun", serif;
+  --font-sans: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", sans-serif;
+  --font-en: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  line-height: 1.8;
+  overflow-x: hidden;
+}
+
+img { max-width: 100%; display: block; }
+a { text-decoration: none; color: inherit; }
+button { font-family: inherit; cursor: pointer; }
+
+::selection { background: rgba(212, 175, 55, 0.3); }
+
+/* ---------- 顶部导航 ---------- */
+.site-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 6vw;
+  transition: var(--transition);
+}
+
+.site-nav.scrolled {
+  padding: 10px 6vw;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.nav-brand {
+  font-family: var(--font-serif);
+  font-weight: 900;
+  font-size: 1.15rem;
+  letter-spacing: 0.35em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-brand .brand-mark {
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 12px currentColor;
+}
+
+.nav-links { display: flex; gap: 2.2rem; list-style: none; }
+
+.nav-links > li { position: relative; }
+
+.nav-links > li > a {
+  font-size: 0.92rem;
+  letter-spacing: 0.2em;
+  position: relative;
+  padding: 4px 0;
+  opacity: 0.85;
+  transition: var(--transition);
+}
+
+.nav-links > li > a::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 0; height: 1px;
+  background: currentColor;
+  transition: width 0.35s ease;
+}
+
+.nav-links > li > a:hover { opacity: 1; }
+.nav-links > li > a:hover::after { width: 100%; }
+
+/* ---------- 类型下拉菜单（hover 显示该类型下的小说） ---------- */
+.dropdown {
+  position: absolute;
+  top: calc(100% + 16px);
+  left: 50%;
+  transform: translateX(-50%) translateY(8px);
+  min-width: 176px;
+  padding: 10px 0;
+  background: rgba(14, 16, 24, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  box-shadow: 0 22px 44px -14px rgba(0, 0, 0, 0.75);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.28s ease, transform 0.28s ease, visibility 0.28s;
+  z-index: 60;
+}
+
+/* 悬停缓冲层：避免鼠标移入子菜单时消失 */
+.dropdown::before {
+  content: "";
+  position: absolute;
+  top: -16px; left: 0; right: 0;
+  height: 16px;
+}
+
+/* 小箭头 */
+.dropdown::after {
+  content: "";
+  position: absolute;
+  top: -5px; left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 9px; height: 9px;
+  background: rgba(14, 16, 24, 0.95);
+  border-left: 1px solid rgba(255, 255, 255, 0.12);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.dropdown a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 20px;
+  font-size: 0.84rem;
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+  opacity: 0.88;
+  transition: var(--transition);
+}
+
+.dropdown a::after { display: none; }
+
+.dropdown a:hover { opacity: 1; background: rgba(255, 255, 255, 0.07); padding-left: 26px; }
+
+.dropdown .d-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+.nav-links > li:hover .dropdown,
+.nav-links > li:focus-within .dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ---------- 页脚 ---------- */
+.site-footer {
+  text-align: center;
+  padding: 60px 6vw 40px;
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  opacity: 0.65;
+}
+
+.site-footer .footer-seal { font-family: var(--font-serif); letter-spacing: 0.4em; margin-bottom: 8px; }
+
+/* ---------- 通用块 ---------- */
+.section-head {
+  text-align: center;
+  margin-bottom: 56px;
+}
+
+.section-head .section-kicker {
+  font-family: var(--font-en);
+  font-size: 0.95rem;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  opacity: 0.6;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.section-head h2 {
+  font-family: var(--font-serif);
+  font-size: clamp(1.7rem, 3.6vw, 2.5rem);
+  font-weight: 700;
+  letter-spacing: 0.25em;
+}
+
+.section-head .section-line {
+  width: 56px; height: 1px;
+  margin: 18px auto 0;
+  background: currentColor;
+  opacity: 0.5;
+  position: relative;
+}
+
+.section-head .section-line::after {
+  content: "";
+  position: absolute;
+  top: -3px; left: 50%;
+  transform: translateX(-50%);
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* ---------- 标签 ---------- */
+.tag {
+  display: inline-block;
+  padding: 4px 14px;
+  font-size: 0.78rem;
+  letter-spacing: 0.15em;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+  opacity: 0.85;
+  margin: 0 6px 6px 0;
+}
+
+/* ---------- 通用按钮 ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 34px;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  letter-spacing: 0.2em;
+  transition: var(--transition);
+  border: 1px solid currentColor;
+}
+
+.btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px -10px rgba(0,0,0,0.4); }
+
+.btn-ghost { background: transparent; }
+
+/* ---------- 淡入动画 ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(36px);
+  transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal.in-view { opacity: 1; transform: translateY(0); }
+
+/* ---------- 响应式 ---------- */
+@media (max-width: 768px) {
+  .nav-links { gap: 1.1rem; }
+  .nav-links a { font-size: 0.78rem; letter-spacing: 0.12em; }
+  .site-nav { padding: 14px 5vw; }
+  .site-nav.scrolled { padding: 8px 5vw; }
+}

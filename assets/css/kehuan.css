@@ -1,0 +1,496 @@
+/* =========================================================
+   kehuan.css — 科幻类页面
+   风格：深空深蓝 + 赛博霓虹 + 玻璃拟态 + 网格透视
+   ========================================================= */
+
+:root {
+  --k-bg: #05070f;
+  --k-cyan: #00e5ff;
+  --k-pink: #ff4fd8;
+  --k-purple: #7a5cff;
+  --k-ink: #e8f4ff;
+  --k-dim: #7c8ca6;
+}
+
+body.kehuan-body {
+  background:
+    radial-gradient(ellipse 70% 50% at 80% -10%, rgba(122, 92, 255, 0.18), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 10% 110%, rgba(0, 229, 255, 0.10), transparent 60%),
+    var(--k-bg);
+  color: var(--k-ink);
+  font-family: var(--font-sans);
+}
+
+.kehuan-body .site-nav { color: var(--k-ink); }
+
+/* ---------- 网格透视背景 ---------- */
+.k-grid-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(90deg, rgba(0, 229, 255, 0.08) 0 1px, transparent 1px 56px),
+    repeating-linear-gradient(0deg, rgba(0, 229, 255, 0.08) 0 1px, transparent 1px 56px);
+  transform: perspective(520px) rotateX(62deg) scale(1.6);
+  transform-origin: 50% 100%;
+  animation: k-grid-move 3.5s linear infinite;
+}
+
+@keyframes k-grid-move {
+  from { background-position-y: 0; }
+  to { background-position-y: 56px; }
+}
+
+/* ---------- Hero ---------- */
+.k-hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 120px 6vw 60px;
+  overflow: hidden;
+}
+
+.k-hero::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 90px;
+  background: linear-gradient(180deg, rgba(0, 229, 255, 0.12), transparent);
+  filter: blur(2px);
+}
+
+.k-hero-inner { position: relative; z-index: 2; }
+
+.k-hero .k-file-tag {
+  font-family: "Courier New", monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.2em;
+  color: var(--k-cyan);
+  background: rgba(0, 229, 255, 0.08);
+  border: 1px solid rgba(0, 229, 255, 0.35);
+  border-radius: 4px;
+  padding: 6px 16px;
+  display: inline-block;
+  margin-bottom: 28px;
+  text-shadow: 0 0 12px rgba(0, 229, 255, 0.6);
+}
+
+.k-hero h1 {
+  font-size: clamp(2.6rem, 8vw, 5.5rem);
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  color: #ffffff;
+  text-shadow:
+    0 0 30px rgba(0, 229, 255, 0.55),
+    0 0 90px rgba(255, 79, 216, 0.35);
+  position: relative;
+}
+
+.k-hero h1 .k-accent { color: var(--k-cyan); }
+
+.k-hero .k-scanline {
+  width: min(480px, 80%);
+  height: 2px;
+  margin: 30px auto 26px;
+  background: linear-gradient(90deg, transparent, var(--k-cyan), var(--k-pink), transparent);
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.6);
+  position: relative;
+}
+
+.k-hero .k-scanline::after {
+  content: "";
+  position: absolute;
+  top: -3px; left: 50%;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 16px var(--k-cyan);
+}
+
+.k-hero .k-desc {
+  max-width: 540px;
+  margin: 0 auto;
+  color: var(--k-dim);
+  font-size: 0.98rem;
+  letter-spacing: 0.14em;
+  line-height: 2.2;
+}
+
+.k-hero .k-status-box {
+  margin: 40px auto 0;
+  max-width: 460px;
+  padding: 18px 26px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(0, 229, 255, 0.25);
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  font-family: "Courier New", monospace;
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  color: var(--k-cyan);
+  text-align: left;
+  line-height: 2.2;
+}
+
+.k-hero .k-status-box .blink { animation: blink 1s steps(2) infinite; }
+
+@keyframes blink { 50% { opacity: 0; } }
+
+.k-hero .k-dots { margin-top: 36px; display: flex; justify-content: center; gap: 8px; }
+
+.k-hero .k-dots span {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--k-dim);
+}
+
+.k-hero .k-dots span:nth-child(1) { background: var(--k-cyan); box-shadow: 0 0 12px var(--k-cyan); }
+.k-hero .k-dots span:nth-child(2) { background: var(--k-purple); box-shadow: 0 0 12px var(--k-purple); }
+.k-hero .k-dots span:nth-child(3) { background: var(--k-pink); box-shadow: 0 0 12px var(--k-pink); }
+
+.k-hero .k-scroll {
+  position: absolute;
+  bottom: 26px; left: 50%;
+  transform: translateX(-50%);
+  font-family: "Courier New", monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.4em;
+  color: var(--k-dim);
+  z-index: 2;
+}
+
+.k-hero .k-scroll::after {
+  content: "";
+  display: block;
+  width: 1px; height: 36px;
+  margin: 8px auto 0;
+  background: linear-gradient(to bottom, var(--k-cyan), transparent);
+}
+
+/* ---------- 区块 ---------- */
+.k-section { padding: 110px 8vw; position: relative; }
+
+.k-section .section-head h2 { color: #fff; }
+
+.k-section .section-head .section-kicker { color: var(--k-cyan); }
+
+/* 玻璃卡片 */
+.k-glass-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 26px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.k-card {
+  padding: 36px 32px;
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid rgba(0, 229, 255, 0.18);
+  border-radius: 12px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.k-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: -60%;
+  width: 50%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.7s ease;
+}
+
+.k-card:hover::before { left: 120%; }
+
+.k-card:hover { transform: translateY(-6px); border-color: rgba(0, 229, 255, 0.5); box-shadow: 0 0 34px rgba(0, 229, 255, 0.14); }
+
+.k-card .k-card-code {
+  font-family: "Courier New", monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  color: var(--k-pink);
+  margin-bottom: 12px;
+}
+
+.k-card h3 {
+  font-size: 1.25rem;
+  letter-spacing: 0.12em;
+  margin-bottom: 14px;
+  color: #fff;
+}
+
+.k-card p { font-size: 0.9rem; color: var(--k-dim); line-height: 2; }
+
+/* 占位说明区 */
+.k-coming {
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 60px 40px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px dashed rgba(0, 229, 255, 0.3);
+  border-radius: 12px;
+}
+
+.k-coming .k-icon {
+  width: 74px; height: 74px;
+  margin: 0 auto 24px;
+  border: 2px solid var(--k-cyan);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Courier New", monospace;
+  font-size: 1.8rem;
+  color: var(--k-cyan);
+  box-shadow: 0 0 30px rgba(0, 229, 255, 0.4);
+  animation: k-pulse 2s ease-in-out infinite;
+}
+
+@keyframes k-pulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(0, 229, 255, 0.3); }
+  50% { box-shadow: 0 0 44px rgba(0, 229, 255, 0.7); }
+}
+
+.k-coming h3 {
+  font-size: 1.3rem;
+  letter-spacing: 0.25em;
+  margin-bottom: 16px;
+  color: #fff;
+}
+
+.k-coming p { color: var(--k-dim); line-height: 2.1; font-size: 0.92rem; }
+
+.k-coming .btn-row { margin-top: 30px; }
+
+.btn-cyan { color: var(--k-cyan); }
+.btn-cyan:hover { background: rgba(0, 229, 255, 0.1); }
+
+/* ---------- 芯级体系表 ---------- */
+.chip-tier-wrap {
+  max-width: 900px;
+  margin: 0 auto;
+  border: 1px solid rgba(0, 229, 255, 0.25);
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.chip-tier {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 18px;
+  padding: 22px 26px;
+  border-bottom: 1px solid rgba(0, 229, 255, 0.12);
+  align-items: center;
+  transition: background 0.3s ease;
+}
+
+.chip-tier:last-child { border-bottom: none; }
+
+.chip-tier:hover { background: rgba(0, 229, 255, 0.05); }
+
+.chip-tier .ct-level { display: flex; align-items: center; gap: 12px; }
+
+.chip-tier .ct-chip {
+  width: 22px; height: 22px;
+  flex-shrink: 0;
+  background:
+    linear-gradient(45deg, rgba(0, 229, 255, 0.25), rgba(122, 92, 255, 0.4));
+  border: 1px solid currentColor;
+  border-radius: 5px;
+  box-shadow: 0 0 10px currentColor;
+  position: relative;
+}
+
+.chip-tier .ct-chip::before,
+.chip-tier .ct-chip::after {
+  content: "";
+  position: absolute;
+  background: currentColor;
+}
+
+.chip-tier .ct-chip::before { top: 50%; left: -6px; right: -6px; height: 1px; }
+.chip-tier .ct-chip::after { left: 50%; top: -6px; bottom: -6px; width: 1px; }
+
+.chip-tier h4 { font-size: 1rem; letter-spacing: 0.12em; }
+
+.chip-tier p { font-size: 0.86rem; color: var(--k-dim); line-height: 1.95; }
+
+.tier-jade { color: #9aa8c0; }
+.tier-blue { color: #4f8fd8; }
+.tier-gold { color: #e0c46a; }
+.tier-obsidian { color: #e8e8ff; box-shadow: 0 0 12px #c0c0ff; }
+
+/* ---------- 社会结构卡 ---------- */
+.k-society { color: #e8f4ff; }
+
+.k-society .k-card-code { color: var(--k-pink); }
+
+/* ---------- 人物档案卡 ---------- */
+.k-char-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 26px;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.k-char {
+  padding: 32px 28px;
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid rgba(0, 229, 255, 0.16);
+  border-radius: 10px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.k-char::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--k-cyan), var(--k-pink), transparent);
+  opacity: 0.4;
+}
+
+.k-char:hover {
+  transform: translateY(-5px);
+  border-color: rgba(0, 229, 255, 0.5);
+  box-shadow: 0 0 30px rgba(0, 229, 255, 0.12);
+}
+
+.k-char .kc-tag {
+  position: absolute;
+  top: 16px; right: 16px;
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  padding: 3px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--k-cyan);
+  color: var(--k-cyan);
+}
+
+.k-char .kc-tag.alert { border-color: var(--k-pink); color: var(--k-pink); }
+.k-char .kc-tag.neutral { border-color: var(--k-purple); color: var(--k-purple); }
+
+.k-char .kc-id {
+  font-family: "Courier New", monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  color: var(--k-dim);
+  margin-bottom: 10px;
+}
+
+.k-char .kc-name-row { display: flex; align-items: baseline; gap: 12px; margin-bottom: 4px; }
+
+.k-char .kc-name { font-size: 1.4rem; font-weight: 700; letter-spacing: 0.12em; color: #fff; }
+
+.k-char .kc-role { font-size: 0.8rem; letter-spacing: 0.12em; color: var(--k-cyan); }
+
+.k-char .kc-meta { font-size: 0.8rem; color: var(--k-dim); letter-spacing: 0.04em; margin-bottom: 12px; }
+
+.k-char p { font-size: 0.88rem; color: var(--k-dim); line-height: 1.95; }
+
+.k-char p strong { color: #e8f4ff; font-weight: 600; }
+
+/* ---------- 剧情模块 ---------- */
+.k-acts { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px; }
+
+.k-act {
+  position: relative;
+  padding: 30px 30px 28px 64px;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(0, 229, 255, 0.16);
+  border-radius: 10px;
+  transition: var(--transition);
+}
+
+.k-act::before {
+  content: "";
+  position: absolute;
+  left: 22px; top: 34px;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--k-cyan);
+  box-shadow: 0 0 14px var(--k-cyan);
+}
+
+.k-act::after {
+  content: "";
+  position: absolute;
+  left: 28.5px; top: 48px; bottom: -48px;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--k-cyan), transparent);
+  opacity: 0.5;
+}
+
+.k-act:last-child::after { display: none; }
+
+.k-act:hover { border-color: rgba(0, 229, 255, 0.45); box-shadow: 0 0 26px rgba(0, 229, 255, 0.1); }
+
+.k-act .ka-stage {
+  font-family: "Courier New", monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.3em;
+  color: var(--k-cyan);
+  margin-bottom: 8px;
+}
+
+.k-act h3 { font-size: 1.2rem; letter-spacing: 0.1em; margin-bottom: 10px; color: #fff; }
+
+.k-act p { font-size: 0.9rem; color: var(--k-dim); line-height: 2; }
+
+.k-act p strong { color: #e8f4ff; font-weight: 600; }
+
+/* ---------- 反套路 ---------- */
+.k-twist {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.k-twist .kt-item {
+  padding: 30px 26px;
+  border: 1px dashed rgba(255, 79, 216, 0.4);
+  border-radius: 10px;
+  transition: var(--transition);
+}
+
+.k-twist .kt-item:hover { border-color: var(--k-pink); background: rgba(255, 79, 216, 0.04); }
+
+.k-twist .kt-no {
+  font-family: "Courier New", monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.25em;
+  color: var(--k-pink);
+  margin-bottom: 10px;
+}
+
+.k-twist h4 { font-size: 1.02rem; letter-spacing: 0.08em; margin-bottom: 10px; color: #fff; }
+
+.k-twist p { font-size: 0.86rem; color: var(--k-dim); line-height: 1.95; }
+
+.kehuan-body .site-footer { color: var(--k-dim); border-top: 1px solid rgba(0, 229, 255, 0.15); }
+
+@media (max-width: 768px) {
+  .k-section { padding: 80px 5vw; }
+  .k-glass-grid { grid-template-columns: 1fr; }
+  .chip-tier { grid-template-columns: 1fr; gap: 8px; }
+  .k-act { padding-left: 52px; }
+}
+
