@@ -440,6 +440,109 @@ body {
   color: rgba(200, 190, 245, 0.75);
 }
 
+/* --- 封面：科幻《契械纪元》（机械构装 · 齿轮契纹） --- */
+.cover-qixie {
+  background:
+    radial-gradient(circle at 50% 32%, rgba(0, 229, 255, 0.16), transparent 56%),
+    repeating-conic-gradient(from 0deg at 50% 40%, rgba(0, 229, 255, 0.05) 0deg 12deg, transparent 12deg 24deg),
+    radial-gradient(circle at 84% 10%, rgba(255, 79, 216, 0.14), transparent 44%),
+    linear-gradient(160deg, #0a1520 0%, #07101c 55%, #101a2c 100%);
+}
+
+/* 契纹虚线环 */
+.cover-qixie .cover-ring {
+  position: absolute;
+  top: 34%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 118px; height: 118px;
+  border-radius: 50%;
+  border: 1px dashed rgba(0, 229, 255, 0.55);
+  animation: qixie-rotate 20s linear infinite;
+}
+
+.cover-qixie .cover-ring::before {
+  content: "";
+  position: absolute;
+  inset: -9px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 229, 255, 0.16);
+}
+
+/* 齿轮核心 */
+.cover-qixie .cover-gear {
+  position: absolute;
+  top: 34%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 76px; height: 76px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, #0e1a28 0%, #0e1a28 46%, transparent 47%),
+    conic-gradient(from 0deg,
+      transparent 0deg 21deg, rgba(0, 229, 255, 0.8) 21deg 30deg,
+      transparent 30deg 51deg, rgba(0, 229, 255, 0.8) 51deg 60deg,
+      transparent 60deg 81deg, rgba(0, 229, 255, 0.8) 81deg 90deg,
+      transparent 90deg 111deg, rgba(0, 229, 255, 0.8) 111deg 120deg,
+      transparent 120deg 141deg, rgba(0, 229, 255, 0.8) 141deg 150deg,
+      transparent 150deg 171deg, rgba(0, 229, 255, 0.8) 171deg 180deg,
+      transparent 180deg 201deg, rgba(0, 229, 255, 0.8) 201deg 210deg,
+      transparent 210deg 231deg, rgba(0, 229, 255, 0.8) 231deg 240deg,
+      transparent 240deg 261deg, rgba(0, 229, 255, 0.8) 261deg 270deg,
+      transparent 270deg 291deg, rgba(0, 229, 255, 0.8) 291deg 300deg,
+      transparent 300deg 321deg, rgba(0, 229, 255, 0.8) 321deg 330deg,
+      transparent 330deg 351deg, rgba(0, 229, 255, 0.8) 351deg 360deg),
+    radial-gradient(circle at 50% 50%, rgba(0, 229, 255, 0.28), rgba(10, 20, 32, 0.92) 68%);
+  border: 2px solid rgba(0, 229, 255, 0.65);
+  box-shadow: 0 0 26px rgba(0, 229, 255, 0.4), inset 0 0 14px rgba(0, 229, 255, 0.28);
+  animation: qixie-rotate 9s linear infinite;
+}
+
+.cover-qixie .cover-gear::after {
+  content: "";
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 14px; height: 14px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: rgba(0, 229, 255, 0.85);
+  box-shadow: 0 0 12px rgba(0, 229, 255, 0.9);
+}
+
+@keyframes qixie-rotate { to { transform: translate(-50%, -50%) rotate(360deg); } }
+
+/* 编号条 */
+.cover-qixie .cover-code {
+  position: absolute;
+  top: 55%; left: 0; right: 0;
+  text-align: center;
+  font-family: "Courier New", monospace;
+  font-size: 0.56rem;
+  letter-spacing: 0.3em;
+  color: rgba(0, 229, 255, 0.85);
+}
+
+.cover-qixie .cover-title {
+  position: absolute;
+  bottom: 21%; left: 0; right: 0;
+  text-align: center;
+  font-family: var(--font-serif);
+  font-size: 1.32rem;
+  font-weight: 900;
+  letter-spacing: 0.3em;
+  color: #eaffff;
+  text-shadow: 0 0 24px rgba(0, 229, 255, 0.8);
+}
+
+.cover-qixie .cover-sub {
+  position: absolute;
+  bottom: 12%; left: 0; right: 0;
+  text-align: center;
+  font-family: var(--font-en);
+  font-size: 0.6rem;
+  letter-spacing: 0.42em;
+  color: rgba(255, 220, 150, 0.9);
+  text-shadow: 0 0 10px rgba(0, 229, 255, 0.4);
+}
+
 /* --- 卡片信息 --- */
 .book-info { padding: 18px 4px 0; text-align: center; }
 
