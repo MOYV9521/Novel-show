@@ -6,6 +6,7 @@
      xuanhuan  玄幻   → 古风五声 · 空灵回响
      kehuan    科幻   → 赛博脉冲 · 低频驱动
      zhexue    游戏   → 八音盒琶音 · 星光梦幻
+     eerie     惊悚   → 不谐低鸣 · 随机尖啸（诡异）
    右下角悬浮按钮：点击开 / 关音乐。
    ========================================================= */
 
@@ -53,6 +54,18 @@
       vol: 0.18,
       decay: 1.8,
       pad: true
+    },
+    eerie: {
+      bpm: 46,
+      scale: [233.08, 277.18, 311.13, 369.99, 466.16, 587.33], // 半音化 · 不谐
+      melody: [0, 3, 6, 3, 1, 4, 3, -1, 0, 2, 5, 3, 1, -1, -1, -1],
+      bass: [110.0, 103.83, 110.0, 87.31], // A-G# 半音下行不安感
+      wave: "sine",
+      vol: 0.13,
+      decay: 4.5,
+      pad: false,
+      drone: true,  // 低频持续底噪
+      shrill: true  // 随机尖啸
     }
   };
 
@@ -66,6 +79,7 @@
   var stepDur = 0.4;
   var timer = null;
   var btn = null;
+  var droneNodes = [];
 
   /* ---------- 样式注入 ---------- */
   var style = document.createElement("style");
@@ -86,16 +100,19 @@
     "background:#ff6b6b;transform:rotate(-45deg);border-radius:2px;}" +
     "#bgm-toggle.playing[data-theme='kehuan']{color:#00e5ff;border-color:#00e5ff;animation:bgmFloat 2.6s ease-in-out infinite,bgmPulseCyan 2.6s ease-in-out infinite;}" +
     "#bgm-toggle.playing[data-theme='zhexue']{color:#e8d9a8;border-color:#e8d9a8;animation:bgmFloat 2.6s ease-in-out infinite,bgmPulseMoon 2.6s ease-in-out infinite;}" +
+    "#bgm-toggle.playing[data-theme='eerie']{color:#ff2e4d;border-color:#ff2e4d;animation:bgmFloat 3.6s ease-in-out infinite,bgmPulseRed 3.6s ease-in-out infinite;}" +
     "@keyframes bgmFloat{0%,100%{margin-top:0}50%{margin-top:-4px}}" +
     "@keyframes bgmPulse{0%,100%{box-shadow:0 4px 18px rgba(0,0,0,.35),0 0 0 rgba(212,175,55,0)}50%{box-shadow:0 4px 18px rgba(0,0,0,.35),0 0 20px rgba(212,175,55,.55)}}" +
     "@keyframes bgmPulseCyan{0%,100%{box-shadow:0 4px 18px rgba(0,0,0,.35),0 0 0 rgba(0,229,255,0)}50%{box-shadow:0 4px 18px rgba(0,0,0,.35),0 0 20px rgba(0,229,255,.55)}}" +
     "@keyframes bgmPulseMoon{0%,100%{box-shadow:0 4px 18px rgba(0,0,0,.35),0 0 0 rgba(232,217,168,0)}50%{box-shadow:0 4px 18px rgba(0,0,0,.35),0 0 20px rgba(232,217,168,.55)}}" +
+    "@keyframes bgmPulseRed{0%,100%{box-shadow:0 4px 18px rgba(0,0,0,.35),0 0 0 rgba(255,46,77,0)}50%{box-shadow:0 4px 18px rgba(0,0,0,.35),0 0 22px rgba(255,46,77,.6)}}" +
     "@media(max-width:600px){#bgm-toggle{right:14px;bottom:14px;width:42px;height:42px;font-size:18px;}}";
   document.head.appendChild(style);
 
   /* ---------- 主题检测 ---------- */
   function detectTheme() {
     var c = document.body.className || "";
+    if (c.indexOf("eerie") > -1) return "eerie";
     if (c.indexOf("kehuan") > -1) return "kehuan";
     if (c.indexOf("zhexue") > -1) return "zhexue";
     if (c.indexOf("xuanhuan") > -1) return "xuanhuan";
@@ -163,6 +180,78 @@
     });
   }
 
+  /* 诡异尖啸：随机高频 + 颤音 */
+  function playShrill(time) {
+    var f = 1150 + Math.random() * 950;
+    var o = ctx.createOscillator();
+    o.type = "sine";
+    o.frequency.setValueAtTime(f, time);
+    o.frequency.exponentialRampToValueAtTime(f * 1.08, time + 0.55);
+    var vib = ctx.createOscillator();
+    vib.frequency.value = 5.5 + Math.random() * 4;
+    var vg = ctx.createGain();
+    vg.gain.value = f * 0.02;
+    vib.connect(vg);
+    vg.connect(o.frequency);
+    var g = ctx.createGain();
+    g.gain.setValueAtTime(0.0001, time);
+    g.gain.exponentialRampToValueAtTime(0.055, time + 0.06);
+    g.gain.exponentialRampToValueAtTime(0.0001, time + 1.3);
+    o.connect(g);
+    g.connect(master);
+    o.start(time);
+    o.stop(time + 1.5);
+    vib.start(time);
+    vib.stop(time + 1.5);
+  }
+
+  /* 诡异 drone：低频底噪 + 三全音副音 + 呼吸感 LFO */
+  function startDrone() {
+    if (!theme.drone) return;
+    var t = ctx.currentTime;
+    var f = 55.0;
+    var o = ctx.createOscillator();
+    o.type = "sine";
+    o.frequency.value = f;
+    var g = ctx.createGain();
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(0.17, t + 4.5);
+    var o2 = ctx.createOscillator();
+    o2.type = "sine";
+    o2.frequency.value = f * 1.414; // 三全音 · 不安感
+    var g2 = ctx.createGain();
+    g2.gain.setValueAtTime(0.0001, t);
+    g2.gain.exponentialRampToValueAtTime(0.055, t + 6.5);
+    var lfo = ctx.createOscillator();
+    lfo.frequency.value = 0.07;
+    var lg = ctx.createGain();
+    lg.gain.value = 0.06;
+    lfo.connect(lg);
+    lg.connect(g.gain);
+    var lfo2 = ctx.createOscillator();
+    lfo2.frequency.value = 0.11;
+    var lg2 = ctx.createGain();
+    lg2.gain.value = 0.02;
+    lfo2.connect(lg2);
+    lg2.connect(g2.gain);
+    o.connect(g);
+    o2.connect(g2);
+    g.connect(master);
+    g2.connect(master);
+    o.start(t);
+    o2.start(t);
+    lfo.start(t);
+    lfo2.start(t);
+    droneNodes = [o, o2, lfo, lfo2];
+  }
+
+  function stopDrone() {
+    droneNodes.forEach(function (n) {
+      try { n.stop(); } catch (e) {}
+    });
+    droneNodes = [];
+  }
+
   /* ---------- 调度器 ---------- */
   function scheduleStep(time, s) {
     var mel = theme.melody;
@@ -177,6 +266,7 @@
     }
     if (theme.pad && s % 16 === 0) playPad(time);
     if (theme.kick && s % 4 === 2) playKick(time);
+    if (theme.shrill && s % 11 === 5) playShrill(time);
   }
 
   function scheduler() {
@@ -193,11 +283,13 @@
     if (!ctx) return;
     if (ctx.state === "suspended") ctx.resume();
     theme = THEMES[detectTheme()] || THEMES.home;
+    stopDrone();
     stepDur = (60 / theme.bpm) * 0.5;
     step = 0;
     nextNoteTime = ctx.currentTime + 0.12;
     if (timer) clearInterval(timer);
     timer = setInterval(scheduler, 90);
+    startDrone();
     playing = true;
     btn.classList.add("playing");
     btn.classList.remove("off");
@@ -208,6 +300,7 @@
   function stopMusic() {
     if (timer) clearInterval(timer);
     timer = null;
+    stopDrone();
     if (ctx && ctx.state === "running") ctx.suspend();
     playing = false;
     btn.classList.remove("playing");

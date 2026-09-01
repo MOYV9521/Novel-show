@@ -1,0 +1,584 @@
+/* =========================================================
+   《未来造反指南》— 反乌托邦赛博朋克
+   主色：血红 #ff2e4d / 警报橙 #ff9f2e / 墨黑 / 暗红
+   元素：故障文字 · 危险条纹 · 终端面板 · 方括号编号
+   ========================================================= */
+
+body.fanzheng-body {
+  background: #060608;
+  color: #d8d8e2;
+}
+
+:root {
+  --fz-red: #ff2e4d;
+  --fz-orange: #ff9f2e;
+  --fz-bg: #060608;
+  --fz-panel: #0e0e16;
+  --fz-line: rgba(255, 46, 77, 0.35);
+  --fz-dim: #8f8fa0;
+  --fz-text: #d8d8e2;
+  --fz-mono: "Courier New", Consolas, monospace;
+}
+
+/* ============ Hero ============ */
+.fz-hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 70% 20%, rgba(255, 46, 77, 0.14), transparent 55%),
+    radial-gradient(ellipse at 20% 85%, rgba(255, 159, 46, 0.07), transparent 50%),
+    linear-gradient(180deg, #060608 0%, #0a0508 60%, #100609 100%);
+}
+
+/* 信号网格 */
+.fz-grid-bg {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 46, 77, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 46, 77, 0.05) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: radial-gradient(circle at 50% 40%, #000 0%, transparent 75%);
+  pointer-events: none;
+}
+
+/* 顶栏警告标语 */
+.fz-marquee {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  padding: 9px 0;
+  background: repeating-linear-gradient(-45deg, #ff2e4d 0 18px, #12070b 18px 36px);
+  color: #fff;
+  font-family: var(--fz-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.32em;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  animation: fz-marquee 16s linear infinite;
+  border-bottom: 1px solid rgba(255, 46, 77, 0.6);
+}
+
+@keyframes fz-marquee {
+  from { background-position: 0 0; }
+  to { background-position: 72px 0; }
+}
+
+.fz-hero-inner {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 0 20px;
+  margin-top: 42px;
+}
+
+.fz-tag {
+  font-family: var(--fz-mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.4em;
+  color: var(--fz-red);
+  margin-bottom: 22px;
+  animation: fz-blink 2.4s steps(2) infinite;
+}
+
+@keyframes fz-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
+
+.fz-title {
+  position: relative;
+  display: inline-block;
+  font-family: var(--font-serif);
+  font-size: clamp(2.6rem, 7vw, 4.6rem);
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  color: #f2f2f8;
+  margin-bottom: 10px;
+  text-shadow: 0 0 34px rgba(255, 46, 77, 0.5);
+}
+
+.fz-title .fz-accent { color: var(--fz-red); }
+
+/* 故障效果 */
+.fz-glitch::before,
+.fz-glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0; top: 0;
+  width: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.fz-glitch::before {
+  color: var(--fz-red);
+  transform: translate(-2px, -1px);
+  animation: fz-glitch-a 3.2s infinite steps(3);
+}
+
+.fz-glitch::after {
+  color: #00e5ff;
+  transform: translate(2px, 1px);
+  opacity: 0.7;
+  animation: fz-glitch-b 2.7s infinite steps(2);
+}
+
+@keyframes fz-glitch-a {
+  0%, 88%, 100% { clip-path: inset(20% 0 62% 0); transform: translate(-2px, -1px); }
+  90% { clip-path: inset(55% 0 8% 0); transform: translate(2px, 1px); }
+  93% { clip-path: inset(38% 0 40% 0); transform: translate(-3px, 0); }
+  96% { clip-path: inset(70% 0 12% 0); transform: translate(2px, -2px); }
+}
+
+@keyframes fz-glitch-b {
+  0%, 86%, 100% { clip-path: inset(60% 0 12% 0); transform: translate(2px, 1px); }
+  90% { clip-path: inset(12% 0 70% 0); transform: translate(-2px, 1px); }
+  95% { clip-path: inset(42% 0 30% 0); transform: translate(1px, 2px); }
+}
+
+.fz-sub {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  letter-spacing: 0.34em;
+  color: rgba(216, 216, 226, 0.72);
+  margin-bottom: 36px;
+}
+
+/* 警报终端框 */
+.fz-alert {
+  max-width: 620px;
+  margin: 0 auto;
+  padding: 18px 22px;
+  text-align: left;
+  background: rgba(10, 4, 8, 0.72);
+  border: 1px solid var(--fz-line);
+  border-left: 3px solid var(--fz-red);
+  box-shadow: 0 0 30px rgba(255, 46, 77, 0.12), inset 0 0 24px rgba(255, 46, 77, 0.05);
+  font-family: var(--fz-mono);
+  font-size: 0.86rem;
+  line-height: 2;
+  color: var(--fz-dim);
+}
+
+.fz-alert .al-line { display: block; }
+
+.fz-alert .al-warn { color: var(--fz-red); }
+.fz-alert .al-ok { color: #7ee0a3; }
+
+.fz-dots {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  gap: 9px;
+}
+
+.fz-dots span {
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: var(--fz-red);
+  box-shadow: 0 0 10px var(--fz-red);
+  animation: fz-dot 2.4s ease-in-out infinite;
+}
+
+.fz-dots span:nth-child(2) { animation-delay: 0.4s; background: var(--fz-orange); box-shadow: 0 0 10px var(--fz-orange); }
+.fz-dots span:nth-child(3) { animation-delay: 0.8s; background: #7ee0a3; box-shadow: 0 0 10px #7ee0a3; }
+
+@keyframes fz-dot {
+  0%, 100% { opacity: 0.35; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+
+.fz-scroll {
+  position: absolute;
+  bottom: 38px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--fz-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.4em;
+  color: var(--fz-dim);
+  animation: fz-scroll 2.2s ease-in-out infinite;
+}
+
+.fz-scroll::after {
+  content: "";
+  display: block;
+  width: 1px; height: 26px;
+  margin: 8px auto 0;
+  background: linear-gradient(180deg, var(--fz-red), transparent);
+}
+
+@keyframes fz-scroll {
+  0%, 100% { opacity: 0.5; transform: translateX(-50%) translateY(0); }
+  50% { opacity: 1; transform: translateX(-50%) translateY(5px); }
+}
+
+/* ============ 通用区块标题（沿用 common 的 section-head） ============ */
+.fanzheng-body .section-head h2 { color: #f2f2f8; }
+.fanzheng-body .section-head h2::after {
+  content: "";
+  display: block;
+  width: 64px; height: 2px;
+  margin: 16px auto 0;
+  background: linear-gradient(90deg, transparent, var(--fz-red), transparent);
+}
+.fanzheng-body .section-kicker { color: var(--fz-red); }
+
+/* ============ 卡片 ============ */
+.fz-card-grid {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+}
+
+.fz-card {
+  position: relative;
+  padding: 30px 28px;
+  background: linear-gradient(160deg, rgba(18, 12, 18, 0.9), rgba(10, 8, 12, 0.9));
+  border: 1px solid rgba(255, 46, 77, 0.22);
+  border-left: 3px solid var(--fz-red);
+  transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.fz-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--fz-red), transparent 70%);
+  opacity: 0.7;
+}
+
+.fz-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 46, 77, 0.6);
+  box-shadow: 0 10px 40px rgba(255, 46, 77, 0.12);
+}
+
+.fz-card .fz-card-code {
+  font-family: var(--fz-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.28em;
+  color: var(--fz-red);
+  margin-bottom: 14px;
+}
+
+.fz-card h3 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #f2f2f8;
+  margin-bottom: 12px;
+}
+
+.fz-card p {
+  font-size: 0.9rem;
+  color: var(--fz-dim);
+  line-height: 2;
+}
+
+.fz-card p strong { color: #f2f2f8; font-weight: 600; }
+
+/* 系统阵营卡（红色警示） */
+.fz-card.system { border-left-color: var(--fz-orange); }
+.fz-card.system::before { background: linear-gradient(90deg, var(--fz-orange), transparent 70%); }
+.fz-card.system .fz-card-code { color: var(--fz-orange); }
+.fz-card.system h3 { color: #ffe8c2; }
+
+/* ============ 四级社会结构 ============ */
+.fz-tier {
+  max-width: 760px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.fz-tier-item {
+  position: relative;
+  padding: 20px 22px;
+  border: 1px solid rgba(255, 46, 77, 0.25);
+  border-top: none;
+  background: rgba(12, 8, 12, 0.75);
+}
+
+.fz-tier-item:first-child {
+  border-top: 1px solid rgba(255, 46, 77, 0.25);
+  border-left: 3px solid var(--fz-orange);
+}
+
+.fz-tier-item .tt-band {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.fz-tier-item h4 {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  letter-spacing: 0.08em;
+  color: #f2f2f8;
+}
+
+.fz-tier-item .tt-rate {
+  font-family: var(--fz-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  color: var(--fz-orange);
+  white-space: nowrap;
+}
+
+.fz-tier-item .tt-eq {
+  font-family: var(--fz-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  color: var(--fz-red);
+  margin-bottom: 8px;
+}
+
+.fz-tier-item p {
+  font-size: 0.86rem;
+  color: var(--fz-dim);
+  line-height: 1.95;
+}
+
+.fz-tier-item p strong { color: #f2f2f8; }
+
+/* 弃置区高亮 */
+.fz-tier-item.scrap {
+  border-left: 3px solid var(--fz-red);
+  background: rgba(30, 8, 12, 0.7);
+  box-shadow: 0 0 26px rgba(255, 46, 77, 0.08) inset;
+}
+
+/* ============ 人物 ============ */
+.fz-char-grid {
+  max-width: 1120px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+
+.fz-char {
+  position: relative;
+  padding: 26px 24px;
+  background: linear-gradient(165deg, rgba(16, 12, 18, 0.92), rgba(8, 8, 12, 0.92));
+  border: 1px solid rgba(255, 46, 77, 0.18);
+  transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+  overflow: hidden;
+}
+
+.fz-char::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 46px; height: 2px;
+  background: var(--fz-red);
+  transition: width 0.35s ease;
+}
+
+.fz-char:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 46, 77, 0.5);
+  box-shadow: 0 8px 34px rgba(255, 46, 77, 0.1);
+}
+
+.fz-char:hover::before { width: 100%; }
+
+.fzc-tag {
+  display: inline-block;
+  padding: 3px 12px;
+  border: 1px solid var(--fz-red);
+  color: var(--fz-red);
+  font-family: var(--fz-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  margin-bottom: 14px;
+}
+
+.fzc-tag.sys { border-color: var(--fz-orange); color: var(--fz-orange); }
+.fzc-tag.gen { border-color: #7ee0a3; color: #7ee0a3; }
+
+.fzc-id {
+  font-family: var(--fz-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.22em;
+  color: rgba(143, 143, 160, 0.7);
+  margin-bottom: 10px;
+}
+
+.fzc-name-row {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 4px;
+  flex-wrap: wrap;
+}
+
+.fzc-name {
+  font-size: 1.32rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #f2f2f8;
+}
+
+.fzc-role {
+  font-family: var(--fz-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  color: var(--fz-red);
+}
+
+.fzc-meta {
+  font-size: 0.78rem;
+  color: var(--fz-dim);
+  margin-bottom: 12px;
+  letter-spacing: 0.04em;
+}
+
+.fz-char p {
+  font-size: 0.86rem;
+  color: var(--fz-dim);
+  line-height: 1.95;
+}
+
+.fz-char p strong { color: #f2f2f8; font-weight: 600; }
+
+/* ============ 剧情 ============ */
+.fz-acts {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.fz-act {
+  position: relative;
+  padding: 26px 28px 26px 54px;
+  background: rgba(12, 8, 12, 0.72);
+  border: 1px solid rgba(255, 46, 77, 0.2);
+  border-radius: 0;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.fz-act::before {
+  content: "";
+  position: absolute;
+  left: 20px; top: 26px;
+  width: 10px; height: 10px;
+  background: var(--fz-red);
+  box-shadow: 0 0 12px var(--fz-red);
+  border-radius: 50%;
+}
+
+.fz-act::after {
+  content: "";
+  position: absolute;
+  left: 24px; top: 42px;
+  width: 2px;
+  bottom: -24px;
+  background: linear-gradient(180deg, var(--fz-red), rgba(255, 46, 77, 0.1));
+}
+
+.fz-act:last-child::after { display: none; }
+
+.fz-act:hover {
+  border-color: rgba(255, 46, 77, 0.55);
+  box-shadow: 0 0 30px rgba(255, 46, 77, 0.1);
+}
+
+.fza-stage {
+  font-family: var(--fz-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.3em;
+  color: var(--fz-red);
+  margin-bottom: 10px;
+}
+
+.fz-act h3 {
+  font-size: 1.25rem;
+  letter-spacing: 0.12em;
+  color: #f2f2f8;
+  margin-bottom: 12px;
+}
+
+.fz-act p {
+  font-size: 0.9rem;
+  color: var(--fz-dim);
+  line-height: 2;
+}
+
+.fz-act p strong { color: #f2f2f8; font-weight: 600; }
+
+.fz-satire {
+  margin-top: 12px;
+  padding: 10px 14px;
+  border-left: 2px solid var(--fz-orange);
+  background: rgba(255, 159, 46, 0.05);
+  font-size: 0.8rem;
+  color: #d8b98a;
+  line-height: 1.9;
+}
+
+.fz-satire strong { color: var(--fz-orange); }
+
+/* ============ 点题 ============ */
+.fz-quote {
+  max-width: 780px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 46px 30px;
+  background:
+    repeating-linear-gradient(-45deg, rgba(255, 46, 77, 0.04) 0 14px, transparent 14px 28px),
+    rgba(10, 6, 10, 0.8);
+  border: 1px solid rgba(255, 46, 77, 0.35);
+  box-shadow: 0 0 46px rgba(255, 46, 77, 0.1);
+}
+
+.fz-quote h3 {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  letter-spacing: 0.2em;
+  color: #f2f2f8;
+  margin-bottom: 20px;
+}
+
+.fz-quote .fz-theme {
+  font-size: 1.14rem;
+  line-height: 2.1;
+  color: #e8e8f0;
+  letter-spacing: 0.08em;
+  margin-bottom: 12px;
+}
+
+.fz-quote .fz-theme strong { color: var(--fz-red); }
+
+.fz-quote .fz-note {
+  font-size: 0.88rem;
+  color: var(--fz-dim);
+  line-height: 2;
+}
+
+/* ============ 响应式 ============ */
+@media (max-width: 900px) {
+  .fz-char-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .fz-card-grid { grid-template-columns: 1fr; }
+  .fz-char-grid { grid-template-columns: 1fr; }
+  .fz-act { padding-left: 46px; }
+  .fz-act::before { left: 16px; }
+  .fz-act::after { left: 20px; }
+}
