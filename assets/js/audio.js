@@ -3,7 +3,7 @@
    基于 Web Audio API 实时合成，无需任何外部音频文件。
    根据页面 body 主题自动切换音色：
      home      主页   → 温暖氛围 · C 大调
-     xuanhuan  玄幻   → 古风五声 · 空灵回响
+     xuanhuan  都市奇幻   → 古风五声 · 空灵回响
      kehuan    科幻   → 赛博脉冲 · 低频驱动
      zhexue    游戏   → 八音盒琶音 · 星光梦幻
      eerie     惊悚   → 不谐低鸣 · 随机尖啸（诡异）

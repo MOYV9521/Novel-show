@@ -1,0 +1,149 @@
+/* =========================================================
+   lingxian.css — 都市奇幻 · 《灵宪：零号悖素》
+   风格：冷墨黑基底 + 银蓝序能 + 灰域暗红 + 刻印淡金
+   复用 xuanhuan.css 的全部布局，本文件只覆盖主题色与新增模块
+   ========================================================= */
+
+:root {
+  --x-bg: #080a0e;
+  --x-bg-2: #0d1118;
+  --x-gold: #cfe3ff;          /* 序能银蓝（主调） */
+  --x-gold-soft: #d9b86a;     /* 刻印淡金（强调） */
+  --x-ink: #e6ebf2;
+  --x-dim: #8b94a2;
+  --x-red: #b04a44;           /* 灰域暗红 */
+  --lx-blue: #7fb6ff;         /* 悖素银蓝 */
+  --lx-purple: #a88cff;       /* 黑匣紫 */
+}
+
+body.lingxian-body {
+  background:
+    radial-gradient(ellipse 80% 60% at 50% -10%, rgba(127, 182, 255, 0.10), transparent 60%),
+    var(--x-bg);
+  color: var(--x-ink);
+}
+
+.lingxian-body .site-nav { color: var(--x-ink); }
+
+/* 序能粒子（覆盖愿力的金色粒子） */
+.lingxian-body .x-hero::before {
+  background-image:
+    radial-gradient(1.5px 1.5px at 10% 20%, rgba(127, 182, 255, 0.55), transparent 60%),
+    radial-gradient(1px 1px at 80% 15%, rgba(207, 227, 255, 0.4), transparent 60%),
+    radial-gradient(1.3px 1.3px at 25% 70%, rgba(127, 182, 255, 0.4), transparent 60%),
+    radial-gradient(1px 1px at 65% 85%, rgba(216, 184, 106, 0.4), transparent 60%),
+    radial-gradient(1.4px 1.4px at 90% 60%, rgba(127, 182, 255, 0.45), transparent 60%),
+    radial-gradient(1px 1px at 45% 40%, rgba(207, 227, 255, 0.3), transparent 60%),
+    radial-gradient(1.2px 1.2px at 5% 90%, rgba(168, 140, 255, 0.4), transparent 60%);
+}
+
+.lingxian-body .x-hero .x-mountains {
+  background:
+    linear-gradient(175deg, transparent 55%, rgba(127, 182, 255, 0.07) 55.5%, rgba(127, 182, 255, 0.07) 56%, transparent 56.5%),
+    linear-gradient(160deg, transparent 62%, rgba(127, 182, 255, 0.05) 62.5%, rgba(127, 182, 255, 0.05) 63%, transparent 63.5%),
+    linear-gradient(180deg, transparent 30%, rgba(20, 26, 40, 0.75) 70%, #06080b 100%);
+}
+
+.lingxian-body .x-hero h1 {
+  background: linear-gradient(180deg, #eaf3ff 10%, var(--lx-blue) 55%, #5b86c4 95%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 50px rgba(127, 182, 255, 0.35);
+}
+
+.lingxian-body .x-hero .x-ornament,
+.lingxian-body .x-hero .x-tags .tag,
+.lingxian-body .x-scroll { color: var(--lx-blue); }
+
+.lingxian-body .x-hero .x-quote { color: rgba(230, 235, 242, 0.85); }
+.lingxian-body .x-hero .x-quote::before,
+.lingxian-body .x-hero .x-quote::after { color: var(--lx-blue); }
+.lingxian-body .x-hero .x-scroll::after {
+  background: linear-gradient(to bottom, var(--lx-blue), transparent);
+}
+
+/* 章节交替底色改用银蓝 */
+.lingxian-body .x-section-alt {
+  background: linear-gradient(180deg, transparent, rgba(127, 182, 255, 0.04) 20%, rgba(127, 182, 255, 0.04) 80%, transparent);
+}
+
+/* 边框色统一为银蓝系 */
+.lingxian-body .world-card { border-color: rgba(127, 182, 255, 0.22); }
+.lingxian-body .world-card::before { background: linear-gradient(90deg, transparent, var(--lx-blue), transparent); }
+.lingxian-body .world-card:hover { border-color: rgba(127, 182, 255, 0.5); }
+.lingxian-body .world-card .wc-no,
+.lingxian-body .world-card h3 { color: var(--lx-blue); }
+.lingxian-body .world-card p strong { color: var(--x-gold-soft); }
+
+.lingxian-body .char-card { border-color: rgba(127, 182, 255, 0.18); }
+.lingxian-body .char-card:hover { border-color: rgba(127, 182, 255, 0.45); }
+.lingxian-body .char-card .char-role { color: var(--x-gold-soft); }
+.lingxian-body .char-card .char-quote {
+  color: rgba(127, 182, 255, 0.8);
+  border-left-color: rgba(127, 182, 255, 0.4);
+  background: rgba(127, 182, 255, 0.04);
+}
+.lingxian-body .char-card .char-tags { color: #9fd0ff; border-top-color: rgba(127, 182, 255, 0.16); }
+
+/* 阵营徽标配色：新增 黑匣(紫) / 灰域(银蓝) */
+.char-badge.box { color: var(--lx-purple); border-color: rgba(168, 140, 255, 0.55); }
+.char-badge.grey { color: var(--lx-blue); border-color: rgba(127, 182, 255, 0.55); }
+
+/* 术语表分类配色 */
+.lingxian-body .g-item[data-cat="grey"] .g-cat { color: var(--lx-blue); border-color: rgba(127, 182, 255, 0.45); }
+.lingxian-body .g-item[data-cat="set"] .g-cat { color: var(--x-gold-soft); border-color: rgba(217, 184, 106, 0.45); }
+
+/* 关系图新增分支色 */
+.lingxian-body .fz-side-box { border-color: rgba(168, 140, 255, 0.35); }
+.lingxian-body .fz-side-box h3 { color: #d7c9ff; }
+.lingxian-body .fz-side-box .fz-side-tag { color: var(--lx-purple); border-color: rgba(168, 140, 255, 0.5); }
+.lingxian-body .fz-side-grey { border-color: rgba(127, 182, 255, 0.4); }
+.lingxian-body .fz-side-grey h3 { color: #bfe0ff; }
+.lingxian-body .fz-side-grey .fz-side-tag { color: var(--lx-blue); border-color: rgba(127, 182, 255, 0.55); }
+
+/* ============ 世界地图 SVG ============ */
+.map-wrap { max-width: 1100px; margin: 0 auto; }
+.world-map {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: 1px solid rgba(127, 182, 255, 0.22);
+  border-radius: 8px;
+  background: radial-gradient(ellipse 60% 50% at 50% 42%, #0c121c, #070a0e 70%);
+}
+.map-legend {
+  display: flex; flex-wrap: wrap; gap: 22px; justify-content: center;
+  max-width: 1100px; margin: 26px auto 0;
+}
+.map-legend span {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 0.78rem; color: var(--x-dim); letter-spacing: 0.08em;
+}
+.map-legend i {
+  width: 11px; height: 11px; border-radius: 50%; display: inline-block;
+  box-shadow: 0 0 10px currentColor;
+}
+.map-note {
+  max-width: 980px; margin: 30px auto 0; text-align: center;
+  font-size: 0.84rem; color: var(--x-dim); line-height: 2; letter-spacing: 0.05em;
+}
+.map-note strong { color: var(--x-gold-soft); }
+
+/* 灰域脉冲动画 */
+@keyframes grey-pulse {
+  0%, 100% { opacity: 0.35; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.06); }
+}
+.grey-zone { transform-origin: center; animation: grey-pulse 4.5s ease-in-out infinite; }
+.grey-zone.b { animation-delay: 1.5s; }
+.grey-zone.c { animation-delay: 3s; }
+@keyframes node-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+.map-node { animation: node-blink 3s ease-in-out infinite; }
+
+.lingxian-body .x-epilogue blockquote .em { color: var(--lx-blue); }
+.lingxian-body .site-footer { color: var(--x-dim); border-top: 1px solid rgba(127, 182, 255, 0.12); }
+.lingxian-body .footer-seal { color: var(--lx-blue); }

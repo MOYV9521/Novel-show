@@ -9,7 +9,8 @@
 site/
 ├── index.html                  # 书库主页（所有作品入口）
 ├── novels/
-│   ├── yuanli-jiuchashi.html   # 《愿力纠察使》玄幻篇（创作中）
+│   ├── yuanli-jiuchashi.html   # 《愿力纠察使》都市奇幻篇（创作中）
+│   ├── lingxian.html           # 《灵宪：零号悖素》都市奇幻篇（创作中）
 │   ├── kehuan.html             # 《替身》科幻篇（创作中）
 │   ├── qixie-jiyuan.html       # 《契械纪元》科幻篇（创作中）
 │   ├── fanzheng-zhinan.html    # 《未来造反指南》科幻篇（创作中）
@@ -18,20 +19,23 @@ site/
     ├── css/
     │   ├── common.css          # 全站通用：导航 / 页脚 / 区块标题 / 按钮
     │   ├── index.css           # 主页书架布局 + 各作品书卡封面
-    │   ├── xuanhuan.css        # 玄幻篇风格
+    │   ├── xuanhuan.css        # 都市奇幻篇风格（文件名沿用 xuanhuan）
+    │   ├── lingxian.css        # 《灵宪：零号悖素》主题覆盖（银蓝序能 · 灰域暗红 · 世界地图）
     │   ├── kehuan.css          # 科幻篇风格（《替身》《契械纪元》）
     │   ├── fanzheng.css        # 反乌托邦赛博风（《未来造反指南》）
     │   └── zhexue.css          # 游戏篇风格
     └── js/
         ├── main.js             # 导航下拉、滚动显现等交互
-        └── audio.js            # 全站 BGM 合成系统（Web Audio）
+        ├── audio.js            # 全站 BGM 合成系统（Web Audio）
+        └── xuanhuan.js         # 都市奇幻篇：术语表搜索与分类筛选
 ```
 
 ## 不同风格说明
 
 | 分类 | 作品 | 设计语言 |
 |------|------|----------|
-| 玄幻 | 《愿力纠察使》 | 墨黑 + 鎏金 + 水墨远山 + 云雾粒子 + 印章元素 |
+| 都市奇幻 | 《愿力纠察使》 | 墨黑 + 鎏金 + 水墨远山 + 云雾粒子 + 印章元素 |
+| 都市奇幻 | 《灵宪：零号悖素》 | 冷墨黑 + 银蓝序能 + 灰域暗红 + 悖素粒子 + SVG 世界地图 |
 | 科幻 | 《替身》 | 深空深蓝 + 赛博霓虹 + 芯片身份卡 + 透视网格 + 玻璃拟态 + 终端风格 |
 | 科幻 | 《契械纪元》 | 青蓝脉冲 + 灵契纹路 + 机械构装 + 齿轮圆环 + 扫描线 |
 | 科幻 | 《未来造反指南》 | 血红警告 + 故障文字 + 危险条纹 + 终端面板 + 反乌托邦 |
@@ -39,9 +43,11 @@ site/
 
 ## 交互特性
 
-- **导航下拉菜单**：鼠标悬停在导航栏的「玄幻 / 科幻 / 游戏」类型按键上，
+- **导航下拉菜单**：鼠标悬停在导航栏的「都市奇幻 / 科幻 / 游戏」类型按键上，
   会显示该类型下包含的所有小说名，点击即可跳转对应详情页。
 - **随页面主题变化的 BGM**：每个详情页会自动匹配专属音色，详见下文。
+- **术语表搜索与筛选**（《愿力纠察使》《灵宪：零号悖素》共用）：支持关键词搜索 +
+  分类标签即时筛选，逻辑通用，见 `xuanhuan.js`（按 `#glossary-grid` / `data-cat` 工作，新增书可直接复用）。
 
 ## BGM 音乐系统
 
@@ -51,7 +57,7 @@ site/
 
 | body class | 对应页面 | 音色 |
 |------------|----------|------|
-| `xuanhuan-body` | 玄幻篇 | 古风五声 · 空灵回响 |
+| `xuanhuan-body` | 都市奇幻篇（《愿力纠察使》《灵宪》） | 古风五声 · 空灵回响 |
 | `kehuan-body` | 科幻篇 | 赛博脉冲 · 低频驱动 |
 | `eerie-body` | 《未来造反指南》 | 不谐低鸣 + 低频 drone + 随机尖啸（诡异） |
 | `zhexue-body` | 游戏篇 | 八音盒琶音 · 星光梦幻 |
@@ -104,7 +110,7 @@ python -m http.server 8080
 ## 如何新增一本小说
 
 1. 在 `novels/` 下新建一个 HTML 文件，引用对应的分类样式（如科幻用 `../assets/css/kehuan.css`）
-2. 在 `index.html` 对应分类的 `book-grid` 中，复制一段 `.book-card` 并修改链接、书名、封面类名（`cover-xuanhuan` / `cover-kehuan` / `cover-qixie` / `cover-fanzheng` / `cover-zhexue`）
+2. 在 `index.html` 对应分类的 `book-grid` 中，复制一段 `.book-card` 并修改链接、书名、封面类名（`cover-xuanhuan` / `cover-lingxian` / `cover-kehuan` / `cover-qixie` / `cover-fanzheng` / `cover-zhexue`）
 3. 在 `index.html` 导航的对应类型 `.dropdown` 中添加新的书名链接，并在其他详情页的相同 dropdown 中同步
 4. 给详情页的 `<body>` 添加对应主题 class（`xuanhuan-body` / `kehuan-body` / `eerie-body` / `zhexue-body`），BGM 会自动匹配音色
 5. 如果是一种全新的分类，可参照 `assets/css/` 现有文件新建一套专属风格
